@@ -1,0 +1,61 @@
+<div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Lab - Equip</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">No</th>
+                      <th>User Name</th>
+                      <th>Equipment Name</th>
+                      <th>From</th>
+                      <th>over returing date</th>
+                      <th class="text-right">to</th>
+                      <th class="text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        <% if(result.length){ var now = new Date();
+                            for(var i = 0;i < result.length;i++) { %>
+                                <tr>
+                                    <td class="text-center"><%= i+1 %></td>
+                                    <td><%= result[i].user.firstname %> <%= result[i].user.lastname %></td>
+                                    <td><%= result[i].equip.equipName %></td>
+                                    <td><%= result[i].registerFrom %></td>
+                                    <% if (result[i].registerTo < now ) { %>
+                                      <td> over returning date</td>
+                                    <% } else { %>
+                                      <td> not over returning date</td>
+                                    <% } %>                                    
+                                    <td class="text-right"><%= result[i].registerTo%></td>
+                                    <td class="td-actions text-right">
+                                      <a href="/approveAction/<%= result[i].aequipId %>" rel="tooltip" class="btn btn-danger">
+                                        <i class="material-icons">touch_app</i>
+                                        </a>
+
+                                    </td>
+                                    </tr>  
+                          <% }
+                          }else{ %>
+                          <tr>
+                            <td colspan="3">No User</td>
+                          </tr>
+                        <% } %>                     
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

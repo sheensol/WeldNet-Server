@@ -1,0 +1,28 @@
+{
+   "name": "lab_book",
+   "description": "ExpressJs + Passport.js + MySQL Authentication",
+   "version": "1.0.0",
+   "author": "",
+   "main": "app.js",
+   "scripts": {
+      "start": "nodemon app.js"
+   },
+   "dependencies": {
+      "bcrypt-nodejs": "*",
+      "bookshelf": "^0.5.8",
+      "cookie-parser": "*",
+      "cors": "^2.8.5",
+      "ejs": "*",
+      "email-validator": "^2.0.4",
+      "express": "4.x",
+      "express-session": "*",
+      "fs": "0.0.1-security",
+      "knex": "^0.19.5",
+      "mysql": "*",
+      "nodemon": "^2.0.1",
+      "passport": "*",
+      "passport-local": "*",
+      "password-reset": "^0.1.4",
+      "pg": "^7.14.0"
+   }
+}

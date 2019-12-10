@@ -1,0 +1,60 @@
+<div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Lab - Equip<a style="float:right;" href="/equipcreate"  rel="tooltip" class="btn btn-danger">
+                <i class="material-icons">note_add</i> Add </a></h4>
+
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                  
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">No</th>
+                      <th>Equip Name</th>
+                      <th>Status</th>
+                      <th>Category</th>
+                      <th>barcode</th>
+                      <th class="text-right">Description</th>
+                      <th class="text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        <% if(result.length){ 
+                            for(var i = 0;i < result.length;i++) { %>
+                                <tr>
+                                    <td class="text-center"><%= i+1 %></td>
+                                    <td><%= result[i].equipName %></td>
+                                    <td><%= result[i].equipStatus %></td>
+                                    <td><%= result[i].category %></td>
+                                    <td><%= result[i].barcode %></td>
+                                    <td class="text-right"><%= result[i].equipDescription%></td>
+                                    <td class="td-actions text-right">
+                                        <a  href="/equipdelete/<%= result[i].equipId %> "  rel="tooltip" class="btn btn-danger">
+                                            <i class="material-icons">close</i></a>
+                                        <!-- <a  href="/book/<%= result[i].equipId+','+result[i].equipName %> "  rel="tooltip" class="btn btn-success">
+                                            <i class="material-icons">edit</i></a> -->
+                                    </td>
+                                    </tr>  
+                          <% }
+                          }else{ %>
+                          <tr>
+                            <td colspan="3">No User</td>
+                          </tr>
+                        <% } %>                     
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

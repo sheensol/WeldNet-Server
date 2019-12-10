@@ -1,0 +1,54 @@
+<div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">assignment</i>
+                  </div>
+                  <h4 class="card-title">User Table</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="text-center">No</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Email</th>
+                          <th class="text-right">Password</th>
+                          <th class="text-right">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                            <% if(result.length){ 
+                                for(var i = 1;i < result.length;i++) { %>
+                                    <tr>
+                                        <td class="text-center"><%= i %></td>
+                                        <td><%= result[i].firstname %></td>
+                                        <td><%= result[i].lastname %></td>
+                                        <td><%= result[i].email %></td>
+                                        <td class="text-right"><%= result[i].password %></td>
+                                        <td class="td-actions text-right">
+                                            <a href="/userdelete/<%= result[i].userId %> " rel="tooltip" class="btn btn-danger">
+                                            <i class="material-icons">close</i>
+                                            </a>
+                                        </td>
+                                        </tr>  
+                              <% }
+                              }else{ %>
+                              <tr>
+                                <td colspan="3">No User</td>
+                              </tr>
+                            <% } %>                     
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
