@@ -33,7 +33,7 @@ var signUpPost = function(req, res, next) {
          companyPromise = new Model.Company({Name: Company}).fetch();
          return companyPromise.then(function(model) {
             if(model) {
-               return res.json('Company already exists');
+               return res.json({'error': 'Company already exists'});
             } else {
                var signUpCompany = new Model.Company({Name:Company,Address:Address,Telephone:Telephone});
                signUpCompany.save().then(function(model) {
@@ -43,7 +43,7 @@ var signUpPost = function(req, res, next) {
                   usernamePromise = new Model.User({Email: Email}).fetch();
                   return usernamePromise.then(function(model) {
                      if(model) {
-                        return res.json('Email already exists');
+                       return res.json({'error': 'Email already exists'});
                      } else {
                         var password = Password;
                         var hash = bcrypt.hashSync(password);
@@ -52,8 +52,20 @@ var signUpPost = function(req, res, next) {
                         signUpUser.save().then(function(model) {
                            // sign in the newly registered user
                            // signInPost(req, res, next);
-                           res.json(model)
+                          // console.log(model);
+
+                          user_ID = model.ID;
+                          var users_company = new Model.User_Company({User_ID:user_ID,Company_ID:ID});
+                          users_company.save().then(function(model) {
+
+                          });
+
+
+                           return res.json({message: 'Signup success. Please signin.'});
                         });
+
+
+
                      }
                   });
                });
@@ -61,11 +73,11 @@ var signUpPost = function(req, res, next) {
          });
       }
       else{
-         res.json('password must be longer than 8 characters');
+         res.json({'error': 'password must be longer than 8 characters'});
       }
    }
    else{
-      res.json('email is invalid')
+      res.json({'error': 'email is invalid'})
    }
 };
 // sign out
