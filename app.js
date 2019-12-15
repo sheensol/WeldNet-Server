@@ -13,10 +13,11 @@ var user = require('./route/user');
 // model
 var Model = require('./model/model');
 var forgot = require('password-reset')({
-   uri : 'http://localhost:8080/password_reset',
+   uri : 'http://localhost:5000/password_reset',
    from : 'password-robot@localhost',
    host : 'localhost', port : 25,
 });
+require('dotenv').config();
 
 var app = express();
 
@@ -64,7 +65,7 @@ app.use(passport.session());
 
 app.post('/signin', user.signInPost);
 app.post('/signup', user.signUpPost);
-app.post('/forgot', user.forgot);
+app.post('/forgot', user.forgotPass);
 app.post('/reset/:token', user.reset);
 app.use(user.notFound404);
 

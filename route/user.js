@@ -4,6 +4,11 @@ var Model = require('../model/model');
 var validator = require('email-validator');
 var fs = require('fs');
 // app.use(require('sesame')());
+const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
+// sendgrid
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 var signInPost = function(req, res, next) {
    passport.authenticate('local', function(err, user, info) {
@@ -61,7 +66,41 @@ var signUpPost = function(req, res, next) {
                           });
 
 
-                           return res.json({message: 'Signup success. Please signin.'});
+                           //return res.json({message: 'Signup success. Please signin.'});
+
+
+
+                           const token = jwt.sign({ Name, Email, Password }, process.env.JWT_ACCOUNT_ACTIVATION, { expiresIn: '1d' });
+
+                                   const emailData = {
+                                       from: process.env.EMAIL_FROM,
+                                       to: Email,
+                                       subject: `Account activation link`,
+                                       html: `
+                                           <h1>Please use the following link to activate your account</h1>
+                                           <p>${process.env.CLIENT_URL}/auth/activate/${token}</p>
+                                           <hr />
+                                           <p>This email may contain sensetive information</p>
+                                           <p>${process.env.CLIENT_URL}</p>
+                                       `
+                                   };
+console.log(process.env.SENDGRID_API_KEY);
+                                   sgMail
+                                       .send(emailData)
+                                       .then(sent => {
+                                           // console.log('SIGNUP EMAIL SENT', sent)
+                                           return res.json({
+                                               message: `Email has been sent to ${email}. Follow the instruction to activate your account`
+                                           });
+                                       })
+                                       .catch(err => {
+                                           // console.log('SIGNUP EMAIL SENT ERROR', err)
+                                           return res.json({
+                                               message: err.message
+                                           });
+                                       });
+
+                                    return res.json({message: 'Signup success. Please signin.'});
                         });
 
 
@@ -89,7 +128,7 @@ var signOut = function(req, res, next) {
       res.redirect('/signin');
    }
 };
-var forgot = function(req, res, next) {
+var forgotPass = function(req, res, next) {
    async.waterfall([
      function(done) {
        crypto.randomBytes(20, function(err, buf) {
@@ -208,5 +247,5 @@ module.exports.signInPost = signInPost;
 module.exports.signUpPost = signUpPost;
 module.exports.signOut = signOut;
 module.exports.notFound404 = notFound404;
-module.exports.forgot = forgot;
+module.exports.forgotPass = forgotPass;
 module.exports.reset = reset;
